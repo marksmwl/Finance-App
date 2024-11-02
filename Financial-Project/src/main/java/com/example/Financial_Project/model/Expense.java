@@ -16,7 +16,7 @@ public class Expense {
 
     private BigDecimal amount;
 
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
