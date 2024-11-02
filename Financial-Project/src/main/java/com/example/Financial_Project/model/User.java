@@ -21,7 +21,10 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-    private List<Category> categoryList;
+
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Category> categoryList = new ArrayList<>();
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -50,16 +53,15 @@ public class User {
         return categoryList;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
-    }
-
     public void addCategory(Category category) {
         this.categoryList.add(category);
+        category.setUser(this);
     }
 
     public boolean removeCategory(Category category) {
-        return this.categoryList.remove(category);
+        boolean result = this.categoryList.remove(category);
+        category.setUser(null);
+        return result;
     }
 
     public void setEmail(String email) {
@@ -81,5 +83,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-// Getters and setters
 }
