@@ -1,6 +1,7 @@
 package com.example.Financial_Project.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Category {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
+        @NotNull
         private String name;
 
         @ManyToOne
@@ -19,7 +21,7 @@ public class Category {
         private User user;
 
         @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<Expense> expenses = new ArrayList<>();
+        private final List<Expense> expenses = new ArrayList<>();
 
         public Long getId() {
                 return id;

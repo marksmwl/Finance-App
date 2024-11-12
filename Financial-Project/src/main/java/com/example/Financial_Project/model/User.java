@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.example.Financial_Project.model.Category;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -13,12 +14,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(nullable = false)
     private String username;
 
+    @NotNull
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull
     @Column(nullable = false)
     private String password;
 
