@@ -26,17 +26,17 @@ public class CategoryController {
         this.userService = userService;
     }
 
-    @PostMapping("/{userID}/addCategory")
-    public ResponseEntity<String> addCategory(@PathVariable Long userID, @Valid @RequestBody Category category) {
-        Optional<User> userOptional = userService.findById(userID);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            category.setUser(user);
-            categoryService.addCategory(category.getUser(), category.getName());
-            return ResponseEntity.ok("Category added successfully.");
-        } else {
-            return ResponseEntity.status(404).body("User not found.");
-        }
-    }
+//    @PostMapping("/{userID}/addCategory")
+//    public ResponseEntity<String> addCategory(@PathVariable Long userID, @Valid @RequestBody Category category) {
+//        Optional<User> userOptional = userService.findById(userID);
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            category.setUser(user);
+//            categoryService.addCategory(category.getUser(), category.getName());
+//            return ResponseEntity.ok("Category added successfully.");
+//        } else {
+//            return ResponseEntity.status(404).body("User not found.");
+//        }
+//    }
 
 }
