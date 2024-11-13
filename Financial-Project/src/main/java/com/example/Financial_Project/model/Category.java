@@ -16,6 +16,9 @@ public class Category {
         @NotNull
         private String name;
 
+        @NotNull
+        private Long ownerId;
+
         @ManyToOne
         @JoinColumn(name = "user_id", nullable = false)
         private User user;
@@ -37,6 +40,10 @@ public class Category {
 
         public void setUser(User user) {
                 this.user = user;
+        }
+
+        public Long getOwnerId() {
+                return this.ownerId;
         }
 
         public String getName() {

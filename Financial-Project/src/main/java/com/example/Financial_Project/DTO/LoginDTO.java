@@ -1,6 +1,6 @@
-package com.example.Financial_Project.Utility;
+package com.example.Financial_Project.DTO;
 
-public class LoginRequest {
+public class LoginDTO {
     private String username;
     private String password;
 
