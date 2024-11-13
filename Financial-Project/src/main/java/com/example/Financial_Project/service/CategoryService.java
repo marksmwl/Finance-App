@@ -28,11 +28,17 @@ public class CategoryService {
         return categoryRepository.findById(Id);
     }
 
-    public Category addCategoryToUser(User user, CategoryDTO category) {
+    public void addCategoryToUser(User user, CategoryDTO category) {
         Category newCategory = new Category();
         newCategory.setName(category.getName());
         newCategory.setUser(user);
-        return categoryRepository.save(newCategory);
+
+        categoryRepository.save(newCategory);
+    }
+
+    public void updateName(Category category, CategoryDTO categoryDTO) {
+       category.setName(categoryDTO.getName());
+       categoryRepository.save(category);
     }
 
     public void deleteById(Long Id) {

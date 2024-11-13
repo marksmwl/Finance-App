@@ -1,5 +1,6 @@
 package com.example.Financial_Project.service;
 
+import com.example.Financial_Project.DTO.ExpenseDTO;
 import com.example.Financial_Project.model.Category;
 import com.example.Financial_Project.model.Expense;
 import com.example.Financial_Project.repository.CategoryRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExpenseService {
@@ -22,15 +24,13 @@ public class ExpenseService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Expense addExpense(Long categoryID, String description, BigDecimal amount) {
-       Category category = categoryRepository.findById(categoryID).orElseThrow(() -> new RuntimeException("Category not found"));
-
+    public void addExpense(Category category, ExpenseDTO expenseDTO) {
        Expense expense = new Expense();
        expense.setCategory(category);
-       expense.setAmount(amount);
-       expense.setDescription(description);
-       category.addExpense(expense);
-       return expenseRepository.save(expense);
+       expense.setAmount(expenseDTO.getAmount());
+       expense.setDescription(expenseDTO.getDescription());
+
+       expenseRepository.save(expense);
     }
 
     // Retrieve all expenses for a specific category
@@ -47,6 +47,10 @@ public class ExpenseService {
         expense.setAmount(newAmount);
         expense.setDate(newDate);
         return expenseRepository.save(expense);
+    }
+
+    public Optional<Expense> findById(Long Id) {
+       return expenseRepository.findById(Id);
     }
 
     // Delete an expense by ID

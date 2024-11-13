@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +40,26 @@ public class CategoryController {
             categoryService.addCategoryToUser(userOptional.get(), category);
             return ResponseEntity.status(HttpStatus.OK).body("Category added");
         }
+    }
+
+    @GetMapping("/{userId}/getCategories")
+    public ResponseEntity<List<Category>> getCategories(@PathVariable Long userId) {
+        Optional<User> userOptional = userService.findById(userId);
+        if (userOptional.isEmpty()) {
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.getCategoriesForUser(userId));
+    }
+
+    @PutMapping("/{categoryId}/changeName")
+    public ResponseEntity<String> changeName(@PathVariable Long categoryId, @RequestBody CategoryDTO categoryDTO) {
+        Optional<Category> categoryOptional = categoryService.findById(categoryId);
+        if (categoryOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category does not exist.");
+        }
+        Category category = categoryOptional.get();
+        categoryService.updateName(category, categoryDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("Category name has been changed.");
     }
 
     @DeleteMapping("{categoryId}")
