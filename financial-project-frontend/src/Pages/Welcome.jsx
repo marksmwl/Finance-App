@@ -1,6 +1,14 @@
 import LoginForm from "../Components/LoginForm";
+import { useNavigate } from "react-router-dom";
+
 
 export function Welcome() {
+    const navigate = useNavigate();
+
+    const guestLogin = () => {
+        navigate('/Home');
+    }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6">
       {/* Hero Section */}
@@ -15,7 +23,7 @@ export function Welcome() {
         {/* Action Buttons */}
         <div className="flex justify-center space-x-4 mb-10">
             
-          <button className="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-200 transition">
+          <button className="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-200 transition" onClick={guestLogin}>
             Login as Guest
           </button>
           <button className="bg-blue-700 px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-blue-800 transition">
