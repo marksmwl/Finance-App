@@ -14,12 +14,12 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100 mb-10 rounded-md">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full">
-        <h2 className="text-2xl font-bold text-center">Login</h2>
+    <div className="flex items-center justify-center rounded-md max-w-xl m-auto border">
+      <form onSubmit={handleSubmit} className="p-8 rounded-lg shadow-lg border-black w-full">
+        {/* <h2 className="text-2xl font-bold text-center">Login</h2> */}
         
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+          <label className="block text-gray-700 text-sm font-bold mb-2 flex" htmlFor="username">
             Username
           </label>
           <input
@@ -34,7 +34,7 @@ export default function LoginForm() {
         </div>
 
         <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+          <label className="block text-gray-700 text-sm font-bold mb-2 flex" htmlFor="password">
             Password
           </label>
           <input
@@ -50,7 +50,7 @@ export default function LoginForm() {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition duration-200"
+          className="w-full bg-sky-500 text-white py-2 rounded-lg font-semibold hover:bg-sky-600 transition duration-200"
         >
           Login
         </button>
