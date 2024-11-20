@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import RecentTransactions from './RecentTransactions';
+import Budget from './Budget';
+import Categories from './Categories';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,21 +45,21 @@ export default function BasicTabs() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Transactions" {...a11yProps(0)}/>
+          <Tab label="Budgeting" {...a11yProps(1)} />
+          <Tab label="Categories" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <RecentTransactions></RecentTransactions>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <Budget></Budget>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <Categories></Categories>
       </CustomTabPanel>
     </Box>
   );

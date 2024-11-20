@@ -11,6 +11,7 @@ export default function LoginForm() {
     e.preventDefault();
     // Handle form submission (e.g., authenticate the user)
     navigate('/Home');
+    console.log(username + " " + password);
   };
 
   return (
