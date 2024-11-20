@@ -20,7 +20,7 @@ export default function LoginForm() {
         {/* <h2 className="text-2xl font-bold text-center">Login</h2> */}
         
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2 flex" htmlFor="username">
+          <label className="text-gray-700 text-sm font-bold mb-2 flex" htmlFor="username">
             Username
           </label>
           <input
@@ -35,7 +35,7 @@ export default function LoginForm() {
         </div>
 
         <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2 flex" htmlFor="password">
+          <label className=" text-gray-700 text-sm font-bold mb-2 flex" htmlFor="password">
             Password
           </label>
           <input

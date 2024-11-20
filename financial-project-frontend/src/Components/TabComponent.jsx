@@ -36,7 +36,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -53,13 +53,13 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <RecentTransactions></RecentTransactions>
+        <RecentTransactions categories={props.categories} updateCategories={props.updateCategories}></RecentTransactions>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Budget></Budget>
+        <Budget categories={props.categories} updateCategories={props.updateCategories}></Budget>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Categories></Categories>
+        <Categories categories={props.categories} updateCategories={props.updateCategories}></Categories>
       </CustomTabPanel>
     </Box>
   );

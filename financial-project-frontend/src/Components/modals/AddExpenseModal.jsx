@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function AddExpenseModal({ isOpen, onClose, onAddExpense }) {
+export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categories }) {
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
 
@@ -27,12 +27,19 @@ export default function AddExpenseModal({ isOpen, onClose, onAddExpense }) {
         <h3 className="text-xl font-bold mb-4">Add Expense</h3>
         <form onSubmit={handleSubmit}>
           <label className="block mb-2">Category</label>
-          <input
-            type="text"
+          <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="border p-2 rounded w-full mb-4"
-          />
+          >
+            <option value="">-- Select a category --</option>
+            {categories.map((cat)=> (
+              <option key={cat.id} value={cat.name.toLowerCase()}>
+                {cat.name}
+              </option>
+            ))}
+          
+          </select>
           
           <label className="block mb-2">Amount</label>
           <input

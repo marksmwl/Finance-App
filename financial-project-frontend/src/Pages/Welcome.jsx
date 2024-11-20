@@ -1,4 +1,4 @@
-import LoginForm from "../Components/LoginForm";
+import LoginForm from "../Components/forms/LoginForm";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../Components/NavBar";
 import {React, useState} from "react";

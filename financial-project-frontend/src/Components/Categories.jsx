@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import AddCategoryModal from "./AddCategoryModal";
+import AddCategoryModal from "./modals/AddCategoryModal";
 
-export default function Categories() {
-  const [categories, setCategories] = useState([
-    { id: 1, name: "Groceries" },
-    { id: 2, name: "Rent" },
-    { id: 3, name: "Entertainment" },
-  ]);
+export default function Categories(props) {
+  const [categories, setCategories] = [props.categories, props.updateCategories]
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

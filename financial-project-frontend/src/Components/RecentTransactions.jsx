@@ -1,7 +1,7 @@
-import AddExpenseModal from "./AddExpenseModal";
+import AddExpenseModal from "./modals/AddExpenseModal";
 import { React, useState } from "react";
 
-export default function RecentTransactions() {
+export default function RecentTransactions(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalBudget] = useState(2000); // Keep as a constant
   const [recentTransactions, setRecentTransactions] = useState([
@@ -9,6 +9,11 @@ export default function RecentTransactions() {
     { id: 2, category: "Rent", amount: 800, date: "2024-11-01" },
     { id: 3, category: "Entertainment", amount: 120, date: "2024-10-29" },
   ]);
+
+  const createTransaction = () => {}
+  const updateTransaction = () => {}
+  const deleteTransaction = () => {}
+  const getTransactions = () => {}
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -60,6 +65,7 @@ export default function RecentTransactions() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onAddExpense={addExpense} // Pass the callback
+        categories={props.categories}
       />
     </>
   );

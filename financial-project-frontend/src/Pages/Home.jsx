@@ -10,6 +10,8 @@ export default function UserHome({ userName }) {
     { id: 3, category: "Entertainment", amount: 120, date: "2024-10-29" },
   ]);
 
+  const [categories, setCategories] = useState([]);
+
   let totalSpent = recentTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
   let remainingBudget = totalBudget - totalSpent;
 
@@ -40,7 +42,7 @@ export default function UserHome({ userName }) {
         </div>
       </div>
 
-      <BasicTabs></BasicTabs>
+      <BasicTabs categories={categories} updateCategories={setCategories}></BasicTabs>
     </div>
   );
 }

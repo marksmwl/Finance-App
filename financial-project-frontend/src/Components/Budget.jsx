@@ -1,7 +1,7 @@
-import AddBudgetModal from "./AddBudgetModal"
+import AddBudgetModal from "./modals/AddBudgetModal"
 import {React, useState} from 'react'
 
-export default function Budget() {
+export default function Budget(props) {
     const createBudget = () => {
     }
     const deleteBudget = () => {
@@ -17,11 +17,7 @@ export default function Budget() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [totalBudget, setTotalBudget] = useState(3000); // Total budget
     const [savingsGoal, setSavingsGoal] = useState(500); // Savings goal
-    const [categories, setCategories] = useState([
-      { id: 1, name: "Groceries", budget: 300 },
-      { id: 2, name: "Rent", budget: 1200 },
-      { id: 3, name: "Entertainment", budget: 200 },
-    ]);
+    const [categories, setCategories] = [props.categories, props.updateCategories]
   
     const handleOpenModal = () => {
       setIsModalOpen(true);
