@@ -16,6 +16,17 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(
+        origins = {
+                "*",
+        },
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+        })
 public class ExpenseController {
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
@@ -36,18 +47,19 @@ public class ExpenseController {
         return ResponseEntity.status(HttpStatus.OK).body("Expense has been added.");
     }
 
+
     @PutMapping("/{expenseId}/update")
     public ResponseEntity<String> updateExpense(@PathVariable Long expenseId, @Valid ExpenseDTO expenseDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body("Expense has been updated.");
     }
 
-    @DeleteMapping("{expenseId}")
-    public ResponseEntity<String> deleteExpense(@PathVariable Long Id) {
-        Optional<Expense> expenseOptional = expenseService.findById(Id);
+    @DeleteMapping("/deleteExpense/{expenseId}")
+    public ResponseEntity<String> deleteExpense(@PathVariable Long expenseId) {
+        Optional<Expense> expenseOptional = expenseService.findById(expenseId);
         if (expenseOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Expense does not exist.");
         }
-        expenseService.deleteExpense(Id);
+        expenseService.deleteExpense(expenseId);
         return ResponseEntity.status(HttpStatus.OK).body("Expense has been deleted");
     }
 

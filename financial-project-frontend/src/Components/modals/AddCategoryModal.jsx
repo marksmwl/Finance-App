@@ -1,18 +1,32 @@
 import React, { useState } from "react";
+import SimpleSnackbar from "../Snackbar";
 
 export default function AddCategoryModal({ isOpen, onClose, onAddCategory }) {
   const [categoryName, setCategoryName] = useState("");
+  const [message, setMessage] = useState("");
+  const [budget, setBudget] = useState("");
+  const [open, setOpen] = useState(false);
+
+
 
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("d")
     if (!categoryName) {
-      alert("Please enter a category name.");
+      setMessage("Enter a category name")
+      setOpen(true);
+      return;
+    }
+    else if (!budget) {
+      setMessage("Enter a budget amount")
+      setOpen(true);
       return;
     }
 
-    onAddCategory(categoryName);
+
+    onAddCategory(categoryName, budget);
     setCategoryName(""); // Reset input
   };
 
@@ -28,6 +42,14 @@ export default function AddCategoryModal({ isOpen, onClose, onAddCategory }) {
             onChange={(e) => setCategoryName(e.target.value)}
             className="border p-2 rounded w-full mb-4"
           />
+          <label className="block mb-2">Budget Amount</label>
+          <input
+            type="number"
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+            className="border p-2 rounded w-full mb-4"
+          />
+
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
             Add
           </button>
@@ -39,6 +61,7 @@ export default function AddCategoryModal({ isOpen, onClose, onAddCategory }) {
             Cancel
           </button>
         </form>
+        <SimpleSnackbar message={message} duration={2000} setOpenState={setOpen} openState={open} />
       </div>
     </div>
   );

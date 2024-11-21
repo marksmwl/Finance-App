@@ -17,6 +17,9 @@ public class Category {
         @NotNull
         private String name;
 
+        @NotNull
+        private Double budget;
+
         @JsonIgnore
         @ManyToOne
         @JoinColumn(name = "user_id", nullable = false)
@@ -56,6 +59,14 @@ public class Category {
         public void addExpense(Expense expense) {
                 this.expenses.add(expense);
                 expense.setCategory(this);
+        }
+
+        public void setBudget(Double budget) {
+                this.budget = budget;
+        }
+
+        public double getBudget() {
+                return this.budget;
         }
 
         public boolean removeExpense(Expense expense) {

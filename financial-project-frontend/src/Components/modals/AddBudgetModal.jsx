@@ -3,6 +3,7 @@ import React, { useState } from "react";
 export default function AddBudgetModal({ isOpen, onClose, onAddBudget, categories }) {
   const [category, setCategory] = useState(categories[0] || "");
   const [budget, setBudget] = useState("");
+  const apiUri = process.env.REACT_APP_API_URI;
 
   if (!isOpen) return null;
 

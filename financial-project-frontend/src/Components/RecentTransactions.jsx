@@ -4,16 +4,33 @@ import { React, useState } from "react";
 export default function RecentTransactions(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalBudget] = useState(2000); // Keep as a constant
-  const [recentTransactions, setRecentTransactions] = useState([
-    { id: 1, category: "Groceries", amount: 50, date: "2024-11-10" },
-    { id: 2, category: "Rent", amount: 800, date: "2024-11-01" },
-    { id: 3, category: "Entertainment", amount: 120, date: "2024-10-29" },
-  ]);
+  const [recentTransactions, setRecentTransactions] = useState([]);
+  const apiUri = process.env.REACT_APP_API_URI;
 
-  const createTransaction = () => {}
-  const updateTransaction = () => {}
-  const deleteTransaction = () => {}
-  const getTransactions = () => {}
+  const createTransaction = () => {};
+  const updateTransaction = () => {};
+  const deleteTransaction = (expenseId) => {
+    const URL = `${apiUri}/deleteExpense/${expenseId}`;
+    const OPTIONS = {
+      method: "DELETE",
+    };
+
+    fetch(URL, OPTIONS).then((response) => {
+      if (!response.ok) {
+        return;
+      }
+      props.setTransactions((prev) =>
+        prev.filter((exp) => exp.id !== expenseId)
+      );
+      props.updateCategories((prev)=>
+        prev.map((category)=>({
+          ...category,
+          expenses: category.expenses.filter((expense)=> expense.id !== expenseId)
+        })))
+    });
+  };
+
+  // Get all user's categories
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -25,41 +42,94 @@ export default function RecentTransactions(props) {
 
   const addExpense = (expense) => {
     const newTransaction = {
-      id: recentTransactions.length + 1, // Generate a new unique ID
-      category: expense.category,
       amount: expense.amount,
-      date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
+      description: expense.description,
+      categoryId: expense.categoryId, // Generate a new unique ID
+
+      //   date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
     };
+
+    const URL = `${apiUri}/addExpense`;
+    const OPTIONS = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTransaction),
+    };
+
+    fetch(URL, OPTIONS)
+    .then((response) => {
+      if (response.ok) {
+        props.setTransactions((prev)=>
+        [newTransaction, ...prev]
+        )
+
+        props.updateCategories((prev) =>
+          prev.map((category) =>
+            category.id == expense.categoryId
+              ? {
+                  ...category,
+                  expenses: [...category.expenses, newTransaction], // Add new expense
+                }
+              : category
+          )
+        );
+
+      }
+    });
 
     setRecentTransactions((prev) => [newTransaction, ...prev]); // Add the new transaction to the top
   };
   return (
     <>
       <div className="bg-white p-4 rounded-lg shadow-md mb-8 max-w-3xl m-auto">
-        <h2 className="text-2xl font-bold mb-4">Recent Transactions</h2>
+        <h2 className="text-2xl font-bold mb-4">Manage Transactions</h2>
 
         <ul>
-          {recentTransactions.map((transaction) => (
-            <li
-              key={transaction.id}
-              className="flex justify-between items-center py-2 border-b border-gray-200"
-            >
-              <div>
-                <p className="font-semibold">{transaction.category}</p>
-                <p className="text-sm text-gray-500">{transaction.date}</p>
-              </div>
-              <p className="text-lg font-bold">${transaction.amount}</p>
-            </li>
-          ))}
+          {props.categories.map((category) =>
+            category.expenses.map((expenses) => (
+              <li
+                className="flex justify-between items-center py-2 border-b border-gray-200"
+              >
+                <div>
+                  <p className="font-semibold">{category.name}</p>
+                  <p className="text-sm text-gray-500">
+                    {expenses.description}
+                  </p>
+                </div>
+                <div className="flex">
+                  <p className="text-lg font-bold mr-5">${expenses.amount}</p>
+                  <button onClick={() => deleteTransaction(expenses.id)}>
+                    <span className="material-symbols-outlined text-2xl">
+                      delete
+                    </span>
+                  </button>
+                </div>
+              </li>
+            ))
+          )}
         </ul>
 
         {/* Add New Expense Button */}
-        <button
+        {props.categories ? (
+          <button
           className="bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-blue-600 transition mt-5"
           onClick={handleOpenModal}
         >
           + Add New Expense
         </button>
+        ) : (
+          <>
+            <button
+          className="bg-gray-400 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-gray-600 transition mt-5"
+        >
+          + Add New Expense
+        </button> <br />
+            <small className="text-red-700">Add a Category first</small>
+          </>
+        )}
+        
       </div>
       <AddExpenseModal
         isOpen={isModalOpen}

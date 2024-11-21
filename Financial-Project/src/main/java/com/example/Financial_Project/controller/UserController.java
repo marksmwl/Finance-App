@@ -2,6 +2,7 @@ package com.example.Financial_Project.controller;
 
 import com.example.Financial_Project.DTO.LoginDTO;
 import com.example.Financial_Project.DTO.ResetPasswordDTO;
+import com.example.Financial_Project.DTO.UpdateSavingsDTO;
 import com.example.Financial_Project.model.User;
 import com.example.Financial_Project.service.UserService;
 import jakarta.validation.Valid;
@@ -15,6 +16,17 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(
+        origins = {
+                "*",
+        },
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+        })
 public class UserController {
 
     @Autowired
@@ -31,16 +43,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<Long> loginUser(@RequestBody LoginDTO loginDTO) {
         Optional<User> user = userService.findByUsername(loginDTO.getUsername());
         if (user.isPresent() && passwordMatches(loginDTO.getPassword(), user.get().getPassword())) {
             // generate a JWT or session token if using Spring Security
-            return ResponseEntity.ok("Login successful!");
+            return ResponseEntity.ok(user.get().getId());
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("deleteUser/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         Optional<User> userOptional = userService.findById(userId);
         if (userOptional.isEmpty()) {
@@ -59,6 +71,17 @@ public class UserController {
         }
         userService.updatePassword(userId, newPassword.getNewPassword());
         return ResponseEntity.ok("Password updated successfully");
+    }
+
+    @PutMapping("/{userId}/savings")
+    public ResponseEntity<String> updatePassword(@PathVariable Long userId, @Valid @RequestBody UpdateSavingsDTO savingsDTO) {
+
+        Optional<User> userOptional = userService.findById(userId);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist.");
+        }
+        userService.updateSavingsGoal(savingsDTO.getAmount(), userOptional.get());
+        return ResponseEntity.ok("Savings goal updated successfully");
     }
 
     private boolean passwordMatches(String rawPassword, String hashedPassword) {

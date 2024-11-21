@@ -18,6 +18,8 @@ public class User {
     @Column(nullable = false)
     private String username;
 
+    private Double savingsGoal;
+
     @NotNull
     @Column(nullable = false, unique = true)
     private String email;
@@ -60,6 +62,10 @@ public class User {
     public void addCategory(Category category) {
         this.categoryList.add(category);
         category.setUser(this);
+    }
+
+    public void setSavingsGoal(Double amount) {
+        this.savingsGoal = amount;
     }
 
     public boolean removeCategory(Category category) {

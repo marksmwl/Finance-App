@@ -31,6 +31,11 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    public void updateSavingsGoal(Double amount, User user) {
+        user.setSavingsGoal(amount);
+        userRepository.save(user);
+    }
+
     public void updatePassword(Long userId, String newPassword) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));

@@ -47,19 +47,20 @@ export default function BasicTabs(props) {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Transactions" {...a11yProps(0)}/>
+          <Tab label="Categories" {...a11yProps(0)}/>
           <Tab label="Budgeting" {...a11yProps(1)} />
-          <Tab label="Categories" {...a11yProps(2)} />
+          <Tab label="Transactions" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <RecentTransactions categories={props.categories} updateCategories={props.updateCategories}></RecentTransactions>
+        <Categories  setTransactions={props.updateTransactions} categories={props.categories} updateCategories={props.updateCategories}></Categories>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Budget categories={props.categories} updateCategories={props.updateCategories}></Budget>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Categories categories={props.categories} updateCategories={props.updateCategories}></Categories>
+        <RecentTransactions setTransactions={props.updateTransactions} categories={props.categories} updateCategories={props.updateCategories}></RecentTransactions>
+
       </CustomTabPanel>
     </Box>
   );

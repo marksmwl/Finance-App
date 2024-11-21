@@ -9,11 +9,18 @@ public class CategoryDTO {
     @NotNull
     private Long userId;
 
+    @NotNull
+    private Double budget;
+
     public String getName() {
         return name;
     }
 
     public Long getUserId() {
         return userId;
+    }
+
+    public @NotNull Double getBudget() {
+        return budget;
     }
 }

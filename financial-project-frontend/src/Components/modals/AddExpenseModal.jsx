@@ -1,19 +1,27 @@
 import React, { useState } from "react";
+import SimpleSnackbar from "../Snackbar";
 
 export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categories }) {
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
+  const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [description, setDescription] = useState("");
+
+  const apiUri = process.env.REACT_APP_API_URI;
 
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!category || !amount) {
-      alert("Please fill in all fields.");
+      setErrorMessage("Fill in all the fields")
+      setOpen(true)
       return;
     }
+
     // Call the parent callback with the form data
-    onAddExpense({ category, amount: parseFloat(amount) });
+    onAddExpense({ categoryId: category, description: description, amount: parseFloat(amount) });
 
     // Clear inputs and close modal
     setCategory("");
@@ -34,12 +42,20 @@ export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categor
           >
             <option value="">-- Select a category --</option>
             {categories.map((cat)=> (
-              <option key={cat.id} value={cat.name.toLowerCase()}>
+              <option key={cat.id + "key"} value={cat.id}>
                 {cat.name}
               </option>
             ))}
           
           </select>
+
+          <label className="block mb-2">Description</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="border p-2 rounded w-full mb-4"
+          />
           
           <label className="block mb-2">Amount</label>
           <input
@@ -60,6 +76,11 @@ export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categor
             Cancel
           </button>
         </form>
+        <SimpleSnackbar
+        message={errorMessage}
+        openState={open}
+        setOpenState={setOpen}
+        />
       </div>
     </div>
   );

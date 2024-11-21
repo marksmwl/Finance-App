@@ -3,7 +3,11 @@ import { useMatch, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const isNotLoggedIn = useMatch("/");
+  const matchRoot = useMatch("/");
+  const matchRegister = useMatch("/Register");
+
+  const isNotLoggedIn = matchRoot || matchRegister;
+
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -22,10 +26,18 @@ export default function NavBar() {
               <button className="m-2 px-2 py-1 rounded-lg shadow-md">
                 Forgot Password?
               </button>
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md" onClick={()=>{ navigate("/Home")}}>
+              <button
+                className="m-2 px-2 py-1 rounded-lg shadow-md"
+                onClick={() => {
+                  navigate("/Home");
+                }}
+              >
                 Guest Login
               </button>
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md">
+              <button
+                className="m-2 px-2 py-1 rounded-lg shadow-md"
+                onClick={() => navigate("/Register")}
+              >
                 Sign up
               </button>
             </div>
@@ -43,10 +55,18 @@ export default function NavBar() {
               <button className="m-2 px-2 py-1 rounded-lg shadow-md text-sm">
                 Forgot Password?
               </button>
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md text-sm" onClick={()=>{ navigate("/Home")}}>
+              <button
+                className="m-2 px-2 py-1 rounded-lg shadow-md text-sm"
+                onClick={() => {
+                  navigate("/Home");
+                }}
+              >
                 Guest Login
               </button>
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md text-sm">
+              <button
+                className="m-2 px-2 py-1 rounded-lg shadow-md text-sm"
+                onClick={() => navigate("/Register")}
+              >
                 Sign up
               </button>
             </div>
@@ -65,7 +85,10 @@ export default function NavBar() {
               >
                 Logout
               </button>
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md">
+              <button
+                className="m-2 px-2 py-1 rounded-lg shadow-md"
+                onClick={() => navigate("/Register")}
+              >
                 Sign up
               </button>
             </div>
@@ -86,7 +109,10 @@ export default function NavBar() {
               >
                 Logout
               </button>
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md text-sm">
+              <button
+                className="m-2 px-2 py-1 rounded-lg shadow-md text-sm"
+                onClick={() => navigate("/Register")}
+              >
                 Sign up
               </button>
             </div>

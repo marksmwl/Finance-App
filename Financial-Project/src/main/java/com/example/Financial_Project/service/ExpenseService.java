@@ -29,8 +29,10 @@ public class ExpenseService {
        expense.setCategory(category);
        expense.setAmount(expenseDTO.getAmount());
        expense.setDescription(expenseDTO.getDescription());
+       category.addExpense(expense);
 
        expenseRepository.save(expense);
+       categoryRepository.save(category);
     }
 
     // Retrieve all expenses for a specific category

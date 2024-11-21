@@ -1,26 +1,61 @@
 // LoginForm.js
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const apiUri = process.env.REACT_APP_API_URI;
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission (e.g., authenticate the user)
-    navigate('/Home');
-    console.log(username + " " + password);
+    e.preventDefault()
+
+    const formData = {
+      username: username,
+      password: password,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+
+    fetch(`${apiUri}/login`, options)
+    .then((response)=>{
+      if (!response.ok) {
+        return
+      }
+      return response.json();
+    })
+    .then(data=>{
+      if (data) {
+        localStorage.setItem("userid", data)
+          navigate("/Home");
+
+      }
+    })
+
+    
   };
 
   return (
-    <div className="flex items-center justify-center rounded-md max-w-xl m-auto border">
-      <form onSubmit={handleSubmit} className="p-8 rounded-lg shadow-lg border-black w-full">
+    <div className="flex items-center justify-center rounded-md max-w-xl m-auto border bg-white">
+      <form
+        onSubmit={handleSubmit}
+        className="p-8 rounded-lg shadow-lg border-black w-full"
+      >
         {/* <h2 className="text-2xl font-bold text-center">Login</h2> */}
-        
+
         <div className="mb-4">
-          <label className="text-gray-700 text-sm font-bold mb-2 flex" htmlFor="username">
+          <label
+            className="text-gray-700 text-sm font-bold mb-2 flex"
+            htmlFor="username"
+          >
             Username
           </label>
           <input
@@ -35,7 +70,10 @@ export default function LoginForm() {
         </div>
 
         <div className="mb-6">
-          <label className=" text-gray-700 text-sm font-bold mb-2 flex" htmlFor="password">
+          <label
+            className=" text-gray-700 text-sm font-bold mb-2 flex"
+            htmlFor="password"
+          >
             Password
           </label>
           <input
