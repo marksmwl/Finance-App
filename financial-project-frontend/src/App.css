@@ -1,38 +1,23 @@
-.App {
-  text-align: center;
+/* Hide the scrollbar track background for minimal look */
+.modal-content {
+  overflow-y: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #c4c4c4 transparent; /* Firefox */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.modal-content::-webkit-scrollbar {
+  width: 8px; /* Make scrollbar thinner */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.modal-content::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar color */
+  border-radius: 10px; /* Round edges */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Change color on hover */
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.modal-content::-webkit-scrollbar-track {
+  background: transparent; /* Make track invisible */
 }

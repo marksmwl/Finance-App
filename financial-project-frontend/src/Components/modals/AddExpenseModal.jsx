@@ -8,7 +8,6 @@ export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categor
   const [errorMessage, setErrorMessage] = useState("");
   const [description, setDescription] = useState("");
 
-  const apiUri = process.env.REACT_APP_API_URI;
 
   if (!isOpen) return null;
 
@@ -19,12 +18,13 @@ export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categor
       setOpen(true)
       return;
     }
-
+    console.log(amount)
     // Call the parent callback with the form data
-    onAddExpense({ categoryId: category, description: description, amount: parseFloat(amount) });
+    onAddExpense({ categoryId: category, description: description, amount: parseFloat(parseFloat(amount).toFixed(2)) });
 
     // Clear inputs and close modal
     setCategory("");
+    setDescription("");
     setAmount("");
     onClose();
   };
@@ -59,7 +59,7 @@ export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categor
           
           <label className="block mb-2">Amount</label>
           <input
-            type="number"
+            type="float"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             className="border p-2 rounded w-full mb-4"
@@ -70,7 +70,12 @@ export default function AddExpenseModal({ isOpen, onClose, onAddExpense, categor
           </button>
           <button
             type="button"
-            onClick={onClose}
+            onClick={()=>{
+              onClose();
+              setCategory("");
+              setDescription("");
+              setAmount("");
+            }}
             className="ml-2 text-gray-500"
           >
             Cancel

@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './index.css';
+import './App.css'
 import { Welcome } from './Pages/Welcome'
 import Home from './Pages/Home'
 import Register from './Pages/Register';

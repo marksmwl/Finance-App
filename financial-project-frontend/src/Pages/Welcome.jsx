@@ -12,7 +12,7 @@ export function Welcome() {
     }
 
   return ( 
-  <div className="bg-slate-100 min-h-screen">
+  <div className="bg-gray-100 min-h-screen">
     <div className="">
       <NavBar/>
       {/* Hero Section */}
@@ -37,10 +37,6 @@ export function Welcome() {
           onClick={()=>{navigate("/Register")}}>
             Sign Up
           </button>
-          <button className="m-2 px-2 py-1 rounded-lg shadow-md bg-sky-200 w-40" onClick={guestLogin}>
-            Login as Guest
-          </button>
-          
         </div>
       </div>
 

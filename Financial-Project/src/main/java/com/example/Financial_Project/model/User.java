@@ -1,4 +1,5 @@
 package com.example.Financial_Project.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class User {
 
     private Double savingsGoal;
 
+    private Double budget;
+
     @NotNull
     @Column(nullable = false, unique = true)
     private String email;
@@ -37,6 +40,14 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Double budget) {
+        this.budget = budget;
     }
 
     public void setUsername(String username) {
@@ -66,6 +77,10 @@ public class User {
 
     public void setSavingsGoal(Double amount) {
         this.savingsGoal = amount;
+    }
+
+    public Double getSavingsGoal() {
+        return savingsGoal;
     }
 
     public boolean removeCategory(Category category) {

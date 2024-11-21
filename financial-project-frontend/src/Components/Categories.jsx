@@ -111,18 +111,23 @@ export default function Categories(props) {
       <div className="bg-white p-4 rounded-lg shadow-md mb-8 max-w-3xl m-auto">
         <h2 className="text-2xl font-bold mb-4">Manage Categories</h2>
 
-        <ul>
-          {categories.map((category) => (
-            <li className="flex justify-between items-center py-2 border-b border-gray-200">
-              <p className="font-semibold">{category.name}</p>
-              <button onClick={() => deleteCategory(category.id)}>
-                <span className="material-symbols-outlined text-2xl">
-                  delete
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        { !(props.categories.length === 0) ?
+
+          <ul className="max-h-48 overflow-y-scroll p-2 bg-slate-50 border border-gray-400 rounded-lg">
+            {categories.map((category) => (
+              <li className="flex justify-between items-center py-2 border-b border-gray-200">
+                <p className="font-semibold">{category.name}</p>
+                <button onClick={() => deleteCategory(category.id)}>
+                  <span className="material-symbols-outlined text-2xl">
+                    delete
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          :
+          <p></p>
+        }
 
         {/* Add New Category Button */}
         

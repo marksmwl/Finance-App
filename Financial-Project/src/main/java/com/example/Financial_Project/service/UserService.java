@@ -31,6 +31,11 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    public void updateBudget(double amount, User user) {
+        user.setBudget(amount);
+        userRepository.save(user);
+    }
+
     public void updateSavingsGoal(Double amount, User user) {
         user.setSavingsGoal(amount);
         userRepository.save(user);

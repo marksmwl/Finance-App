@@ -1,11 +1,11 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import RecentTransactions from './RecentTransactions';
-import Budget from './Budget';
-import Categories from './Categories';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import RecentTransactions from "./RecentTransactions";
+import Budget from "./Budget";
+import Categories from "./Categories";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,7 +32,7 @@ CustomTabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -44,24 +44,45 @@ export default function BasicTabs(props) {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Categories" {...a11yProps(0)}/>
-          <Tab label="Budgeting" {...a11yProps(1)} />
-          <Tab label="Transactions" {...a11yProps(2)} />
+    <Box className="max-w-5xl m-auto bg-white rounded-3xl shadow-md">
+      <Box
+        className="border-b flex justify-center bg-slate-300"
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Categories" {...a11yProps(0)} />
+          <Tab label="Transactions" {...a11yProps(1)} />
+          {/* <Tab label="Budgeting" {...a11yProps(2)} /> */}
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Categories  setTransactions={props.updateTransactions} categories={props.categories} updateCategories={props.updateCategories}></Categories>
+        <Categories
+          setTransactions={props.updateTransactions}
+          categories={props.categories}
+          updateCategories={props.updateCategories}
+        ></Categories>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Budget categories={props.categories} updateCategories={props.updateCategories}></Budget>
+        <RecentTransactions
+          transactions={props.transactions}
+          setTransactions={props.updateTransactions}
+          categories={props.categories}
+          updateCategories={props.updateCategories}
+        ></RecentTransactions>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <RecentTransactions setTransactions={props.updateTransactions} categories={props.categories} updateCategories={props.updateCategories}></RecentTransactions>
-
-      </CustomTabPanel>
+      {/* <CustomTabPanel value={value} index={2}>
+        <Budget
+          categories={props.categories}
+          updateCategories={props.updateCategories}
+          totalBudget={props.totalBudget}
+          setTotalBudget={props.setTotalBudget}
+          savings={props.savings}
+          setSavings={props.setSavings}
+        ></Budget>
+      </CustomTabPanel> */}
     </Box>
   );
 }

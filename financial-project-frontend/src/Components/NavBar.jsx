@@ -20,22 +20,13 @@ export default function NavBar() {
         <>
           <div className="w-full flex justify-between p-2 border-b bg-white text-sm">
             <div>
-              <p className="m-2 text-md">Financier</p>
+              <p className="m-2 text-xl ml-10">Financier</p>
             </div>
             <div className="hidden sm:flex justify-evenly">
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md">
-                Forgot Password?
-              </button>
+            
+
               <button
-                className="m-2 px-2 py-1 rounded-lg shadow-md"
-                onClick={() => {
-                  navigate("/Home");
-                }}
-              >
-                Guest Login
-              </button>
-              <button
-                className="m-2 px-2 py-1 rounded-lg shadow-md"
+                className="m-2 mr-10 px-2 py-1 rounded-lg shadow-md"
                 onClick={() => navigate("/Register")}
               >
                 Sign up
@@ -52,23 +43,13 @@ export default function NavBar() {
 
           {isOpen && (
             <div className=" flex justify-evenly bg-white sm:hidden border-b-2">
-              <button className="m-2 px-2 py-1 rounded-lg shadow-md text-sm">
-                Forgot Password?
-              </button>
-              <button
-                className="m-2 px-2 py-1 rounded-lg shadow-md text-sm"
-                onClick={() => {
-                  navigate("/Home");
-                }}
-              >
-                Guest Login
-              </button>
-              <button
+              
+              {/* <button
                 className="m-2 px-2 py-1 rounded-lg shadow-md text-sm"
                 onClick={() => navigate("/Register")}
               >
                 Sign up
-              </button>
+              </button> */}
             </div>
           )}
         </>
@@ -89,7 +70,8 @@ export default function NavBar() {
                 className="m-2 px-2 py-1 rounded-lg shadow-md"
                 onClick={() => navigate("/Register")}
               >
-                Sign up
+                View GitHub
+
               </button>
             </div>
 
@@ -105,7 +87,10 @@ export default function NavBar() {
             <div className=" flex justify-evenly bg-white sm:hidden border-b-2">
               <button
                 className="m-2 px-2 py-1 rounded-lg shadow-md text-sm"
-                onClick={() => navigate("/")}
+                onClick={() => {
+                  navigate("/");
+                  localStorage.clear();
+                }}
               >
                 Logout
               </button>
@@ -113,7 +98,7 @@ export default function NavBar() {
                 className="m-2 px-2 py-1 rounded-lg shadow-md text-sm"
                 onClick={() => navigate("/Register")}
               >
-                Sign up
+                View GitHub
               </button>
             </div>
           )}

@@ -24,15 +24,17 @@ public class ExpenseService {
         this.categoryRepository = categoryRepository;
     }
 
-    public void addExpense(Category category, ExpenseDTO expenseDTO) {
+    public Long addExpense(Category category, ExpenseDTO expenseDTO) {
        Expense expense = new Expense();
        expense.setCategory(category);
        expense.setAmount(expenseDTO.getAmount());
        expense.setDescription(expenseDTO.getDescription());
        category.addExpense(expense);
 
-       expenseRepository.save(expense);
        categoryRepository.save(category);
+       List<Expense> expenses= category.getExpenses();
+        return expenses.get(expenses.size() - 1)
+                .getId();
     }
 
     // Retrieve all expenses for a specific category

@@ -1,10 +1,12 @@
 // LoginForm.js
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SimpleSnackbar from "../Snackbar";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [open, setOpen] = useState(false)
   const navigate = useNavigate();
 
   const apiUri = process.env.REACT_APP_API_URI;
@@ -28,6 +30,7 @@ export default function LoginForm() {
     fetch(`${apiUri}/login`, options)
     .then((response)=>{
       if (!response.ok) {
+        setOpen(true)
         return
       }
       return response.json();
@@ -93,6 +96,11 @@ export default function LoginForm() {
         >
           Login
         </button>
+        <SimpleSnackbar
+        message={"Incorrect username or password."}
+        openState={open}
+        setOpenState={setOpen}
+        />
       </form>
     </div>
   );

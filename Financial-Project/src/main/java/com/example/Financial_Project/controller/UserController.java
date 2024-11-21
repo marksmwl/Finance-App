@@ -1,8 +1,6 @@
 package com.example.Financial_Project.controller;
 
-import com.example.Financial_Project.DTO.LoginDTO;
-import com.example.Financial_Project.DTO.ResetPasswordDTO;
-import com.example.Financial_Project.DTO.UpdateSavingsDTO;
+import com.example.Financial_Project.DTO.*;
 import com.example.Financial_Project.model.User;
 import com.example.Financial_Project.service.UserService;
 import jakarta.validation.Valid;
@@ -73,14 +71,41 @@ public class UserController {
         return ResponseEntity.ok("Password updated successfully");
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<UserDTO> getUserInfo(@PathVariable Long userId) {
+        Optional<User> userOptional = userService.findById(userId);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        User user = userOptional.get();
+        UserDTO userResponse = new UserDTO();
+        userResponse.setEmail(user.getEmail());
+        userResponse.setName(user.getUsername());
+        userResponse.setBudget(user.getBudget());
+        userResponse.setSavings(user.getSavingsGoal());
+        userResponse.setUserId(user.getId());
+        return ResponseEntity.ok(userResponse);
+    }
+
     @PutMapping("/{userId}/savings")
-    public ResponseEntity<String> updatePassword(@PathVariable Long userId, @Valid @RequestBody UpdateSavingsDTO savingsDTO) {
+    public ResponseEntity<String> updateSavings(@PathVariable Long userId, @Valid @RequestBody UpdateSavingsDTO savingsDTO) {
 
         Optional<User> userOptional = userService.findById(userId);
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist.");
         }
         userService.updateSavingsGoal(savingsDTO.getAmount(), userOptional.get());
+        return ResponseEntity.ok("Savings goal updated successfully");
+    }
+
+    @PutMapping("/{userId}/budget")
+    public ResponseEntity<String> updatePassword(@PathVariable Long userId, @Valid @RequestBody UpdateBudgetDTO budgetDTO) {
+
+        Optional<User> userOptional = userService.findById(userId);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User does not exist.");
+        }
+        userService.updateBudget(budgetDTO.getBudget(), userOptional.get());
         return ResponseEntity.ok("Savings goal updated successfully");
     }
 

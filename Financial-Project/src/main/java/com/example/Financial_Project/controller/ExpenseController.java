@@ -38,13 +38,13 @@ public class ExpenseController {
     }
 
     @PostMapping("/addExpense")
-    public ResponseEntity<String> addExpense(@Validated @RequestBody ExpenseDTO expenseDTO) {
+    public ResponseEntity<Long> addExpense(@Validated @RequestBody ExpenseDTO expenseDTO) {
         Optional<Category> categoryOptional = categoryService.findById(expenseDTO.getCategoryId());
         if (categoryOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category does not exist.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        expenseService.addExpense(categoryOptional.get(), expenseDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("Expense has been added.");
+        Long expenseId = expenseService.addExpense(categoryOptional.get(), expenseDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(expenseId);
     }
 
 
